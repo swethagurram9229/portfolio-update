@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swetha's Creative Portfolio</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body, html {
+      height: 100%;
+      scroll-behavior: smooth;
+      background: #f6f5f0;
+      color: #222;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark-theme {
+      /*background: #1d1e78;*/
+      color: #e2e2e2;
+    }
+    .navbar.dark-theme, .navbar.dark-theme .navbar-brand, .navbar.dark-theme .nav-link, .navbar.dark-theme .form-check-label {
+      background: #23272b !important;
+      color: #e2e2e2 !important;
+    }
+    .navbar.dark-theme .nav-link.active, .navbar.dark-theme .nav-link:focus, .navbar.dark-theme .nav-link:hover {
+      color: #ffd700 !important;
+    }
+    /* Animated Gradient Background */
+    .hero-bg {
+      min-height: 60vh;
+      background: linear-gradient(-45deg, #6a11cb, #2575fc, #43e97b, #38f9d7);
+      background-size: 400% 400%;
+      animation: heroGradientLight 12s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      color: #fff;
+      overflow: hidden;
+      transition: background 0.3s, color 0.3s;
+      border: 4px solid #2575fc;
+      box-shadow: 0 0 24px 2px #6a11cb, 0 2px 24px 2px #43e97b;
+      z-index: 1;
+    }
+    @keyframes heroGradientLight {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    body.dark-theme .hero-bg {
+      background: linear-gradient(-45deg, #8f5cff, #00c6fb, #1d2671, #5f2eea);
+      background-size: 400% 400%;
+      animation: heroGradientDark 12s ease infinite;
+      color: #e2e2e2;
+      border: 4px solid #8f5cff;
+      box-shadow: 0 0 32px 2px #5f2eea, 0 2px 24px 2px #00c6fb;
+    }
+    @keyframes heroGradientDark {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .hero-content {
+      z-index: 2;
+      text-align: center;
+      width: 100%;
+    }
+    .profile-img-hero {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      margin-bottom: 1rem;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+    .profile-img-hero:hover {
+      transform: scale(1.08) rotate(-2deg);
+    }
+    .animated-text {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      animation: fadeInUp 2s;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Timeline */
+    .timeline {
+      position: relative;
+      margin: 2rem 0 2rem 2rem;
+      padding-left: 2rem;
+      border-left: 4px solid #2575fc;
+    }
+    .timeline-event {
+      position: relative;
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 1.2s;
+    }
+    .timeline-event:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -2.1rem;
+      top: 0.2rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      background: #fff;
+      border: 4px solid #2575fc;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    /* Tech Badges */
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .tech-badge {
+      background: #fff;
+      color: #2575fc;
+      border-radius: 2rem;
+      padding: 0.7rem 1.5rem;
+      font-size: 1.2rem;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(37,117,252,0.08);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .tech-badge i {
+      font-size: 3rem;
+    }
+    @media (max-width: 576px) {
+      .tech-badge i {
+        font-size: 2.2rem;
+      }
+    }
+    .tech-badge:hover {
+      background: #2575fc;
+      color: #fff;
+      transform: scale(1.08);
+    }
+    /* Project Cards */
+    .project-card {
+      perspective: 1000px;
+      border: none;
+      background: transparent;
+    }
+    .project-inner {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      transition: transform 0.7s;
+      transform-style: preserve-3d;
+    }
+    .project-card:hover .project-inner {
+      transform: rotateY(180deg);
+    }
+    .project-front, .project-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 1rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+      padding: 1.5rem;
+      background: #fff;
+    }
+    .project-back {
+      transform: rotateY(180deg);
+      background: #2575fc;
+      color: #fff;
+    }
+    /* Education Card */
+    .edu-card {
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: #fff;
+      border-radius: 1.2rem;
+      box-shadow: 0 4px 24px rgba(37,117,252,0.13);
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    /* Contact Floating */
+    .contact-floating {
+      background: #fff;
+      border-radius: 1.2rem;
+      box-shadow: 0 4px 24px rgba(37,117,252,0.13);
+      padding: 2rem 1.5rem;
+      margin-top: -4rem;
+      z-index: 10;
+      position: relative;
+    }
+    .contact-icons a {
+      font-size: 2rem;
+      margin: 0 1rem;
+      color: #2575fc;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .contact-icons a:hover {
+      color: #ff6a00;
+      transform: scale(1.2);
+    }
+    /* Declaration Quote */
+    .declaration-quote {
+      font-size: 1.3rem;
+      font-style: italic;
+      background: #f7f7f7;
+      border-left: 6px solid #2575fc;
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+      border-radius: 0.7rem;
+      box-shadow: 0 2px 8px rgba(37,117,252,0.07);
+      position: relative;
+    }
+    .declaration-quote:after {
+      content: "\201D";
+      font-size: 3rem;
+      color: #2575fc;
+      position: absolute;
+      right: 1.5rem;
+      top: 0.5rem;
+      opacity: 0.2;
+    }
+    .signature {
+      text-align: right;
+      font-family: 'Brush Script MT', cursive;
+      font-size: 1.2rem;
+      color: #2575fc;
+      margin-top: 0.5rem;
+    }
+    /* Scroll Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.7s cubic-bezier(.77,0,.18,1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: none;
+    }
+    .contact-btn {
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .contact-btn:hover {
+      background: #2575fc !important;
+      color: #fff !important;
+      box-shadow: 0 4px 16px rgba(37,117,252,0.13);
+    }
+    .resume-container {
+      background: linear-gradient(135deg, #f6f5f0 60%, #eae8df 100%);
+      border-radius: 2rem;
+      box-shadow: 0 8px 40px rgba(30,30,60,0.10), 0 1.5px 6px rgba(30,30,60,0.07);
+      max-width: 1100px;
+      margin: 7rem auto 5px auto;
+      padding: 2.5rem 1.5rem;
+      transition: transform 0.3s cubic-bezier(.77,0,.18,1), box-shadow 0.3s, background 0.3s;
+      position: relative;
+    }
+    @media (max-width: 768px) {
+      .resume-container {
+        margin-top: 6rem;
+        margin-bottom: 5px;
+      }
+    }
+    .resume-container:hover {
+      transform: scale(1.025) translateY(-8px);
+      box-shadow: 0 16px 64px rgba(30,30,60,0.18), 0 2px 12px rgba(30,30,60,0.10);
+    }
+    .resume-container::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 2rem;
+      box-shadow: 0 2px 16px 2px #e0e0e0 inset;
+      pointer-events: none;
+    }
+    body.dark-theme .resume-container {
+      background: linear-gradient(135deg, #1d1e78 60%, #23248a 100%);
+      box-shadow: 0 8px 40px rgba(29,30,120,0.18), 0 1.5px 6px rgba(29,30,120,0.13);
+    }
+    body.dark-theme .resume-container::after {
+      box-shadow: 0 2px 24px 2px #181a3a inset;
+    }
+    body.dark-theme .text-muted {
+      color: #b0b3b8 !important;
+    }
+    body.dark-theme #experience, body.dark-theme #experience * {
+      color: #23272b !important;
+    }
+    .btn-contact-hero {
+      background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
+      color: #23272b;
+      border: none;
+      transition: transform 0.2s cubic-bezier(.77,0,.18,1), box-shadow 0.2s, background 0.3s, color 0.3s;
+      font-weight: 600;
+    }
+    .btn-contact-hero:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 16px 2px #ffd700, 0 2px 12px rgba(30,30,60,0.10);
+      background: linear-gradient(90deg, #ffcc33 0%, #ffb347 100%);
+      color: #1d1e78;
+    }
+    .navbar {
+      z-index: 1055;
+    }
+    /* Contact Section Redesign */
+    #contact .contact-card {
+      background: rgba(255,255,255,0.7);
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 32px rgba(37,117,252,0.13);
+      backdrop-filter: blur(6px);
+      padding: 2.5rem 1.5rem;
+      border: 1.5px solid #eae8df;
+      margin-top: 2rem;
+    }
+    body.dark-theme #contact .contact-card {
+      background: rgba(29,30,120,0.7);
+      border: 1.5px solid #5f2eea;
+      box-shadow: 0 8px 32px rgba(143,92,255,0.13);
+    }
+    .contact-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+    .contact-method {
+      flex: 1 1 180px;
+      min-width: 180px;
+      max-width: 240px;
+      background: #f6f5f0;
+      border-radius: 1rem;
+      padding: 1.2rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #23272b;
+      box-shadow: 0 2px 8px rgba(37,117,252,0.07);
+      border: 1.5px solid #eae8df;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+      text-decoration: none;
+      word-break: break-all;
+      overflow-wrap: anywhere;
+    }
+    .contact-method:hover {
+      background: #2575fc;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(37,117,252,0.13);
+      border: 1.5px solid #2575fc;
+      text-decoration: none;
+    }
+    .contact-method i {
+      font-size: 1.5rem;
+    }
+    body.dark-theme .contact-method {
+      background: #23248a;
+      color: #fff;
+      border: 1.5px solid #5f2eea;
+    }
+    body.dark-theme .contact-method:hover {
+      background: #8f5cff;
+      color: #23272b;
+      border: 1.5px solid #8f5cff;
+    }
+    .glass-navbar {
+      background: linear-gradient(180deg, rgba(255,255,255,0.95) 80%, #e3eafe 100%);
+      color: #23248a;
+      box-shadow: 0 2px 16px 0 rgba(37,117,252,0.10);
+      backdrop-filter: blur(8px);
+      border-bottom-left-radius: 1.5rem;
+      border-bottom-right-radius: 1.5rem;
+      opacity: 0.97;
+      transition: background 0.3s, color 0.3s;
+    }
+    .glass-navbar .navbar-brand, .glass-navbar .nav-link, .glass-navbar .form-check-label {
+      color: #23248a !important;
+    }
+    .glass-navbar .nav-link.active, .glass-navbar .nav-link:focus, .glass-navbar .nav-link:hover {
+      color: #ffd700 !important;
+    }
+    body.dark-theme .glass-navbar {
+      background: linear-gradient(90deg, #23248a 0%, #5f2eea 100%);
+      color: #fff;
+      opacity: 0.98;
+    }
+    body.dark-theme .glass-navbar .navbar-brand, body.dark-theme .glass-navbar .nav-link, body.dark-theme .glass-navbar .form-check-label {
+      color: #fff !important;
+    }
+    body.dark-theme .glass-navbar .nav-link.active, body.dark-theme .glass-navbar .nav-link:focus, body.dark-theme .glass-navbar .nav-link:hover {
+      color: #ffd700 !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top shadow-sm glass-navbar" id="mainNavbar">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#hero">
+        <i class="fas fa-user-circle me-2"></i>Swetha
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#hero">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tech">Tech Stack</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#experience">Experience</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#projects">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#education">Education</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#declaration">Declaration</a>
+          </li>
+        </ul>
+        <div class="form-check form-switch ms-lg-4 ms-2">
+          <input class="form-check-input" type="checkbox" id="themeSwitch">
+          <label class="form-check-label text-light" for="themeSwitch" id="themeLabel">Dark</label>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="resume-container my-4">
+    <!-- Hero Section -->
+    <section class="hero-bg" id="hero">
+      <div class="hero-content">
+        <input type="file" id="imgUpload" accept="image/*" style="display:none;" onchange="previewImage(event)">
+        <img src="../swetha-img.jpeg" alt="Profile" class="profile-img-hero" id="profilePic" onclick="document.getElementById('imgUpload').click()" title="Click to upload your image">
+        <h1 class="display-4 fw-bold mb-2">Swetha Gurram</h1>
+        <div class="animated-text mb-3">Full Stack Developer | 8+ Years Experience</div>
+        <p class="lead mb-4">Building creative, scalable web solutions with passion and precision.</p>
+        <a href="#contact" class="btn btn-warning btn-lg shadow btn-contact-hero" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Me</a>
+      </div>
+    </section>
+
+    <!-- Professional Summary Section -->
+    <section class="py-4" id="summary">
+      <div class="container">
+        <h2 class="mb-3 fw-bold text-center">Professional Summary</h2>
+        <p class="lead text-center">Around 4+ years of extensive experience in the Software Development Life Cycle (SDLC), specializing in developing and designing user experiences for Internet/Intranet applications using modern web technologies and frameworks.</p>
+        <ul class="mx-auto" style="max-width: 900px;">
+          <li>Expertise in HTML5, CSS3, SASS, JavaScript, Bootstrap 3/4, JSON, AngularJS, Angular 9, and meeting W3C standards.</li>
+          <li>Skilled in building Single Page Applications (SPA) using MVC and JavaScript frameworks such as AngularJS and Vue.js.</li>
+          <li>Experience with ES6, responsive web design, and cross-browser compatibility.</li>
+          <li>Strong debugging skills using Chrome Developer Tools and Firebug.</li>
+          <li>Proficient in User Acceptance Testing (UAT), Accessibility Testing, and Agile methodologies.</li>
+          <li>Worked with editors like Dreamweaver, Notepad++, Web Storm, Atom, Eclipse.</li>
+          <li>Excellent communication, teamwork, and adaptability to new technologies.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Technologies Section -->
+    <section class="py-5" id="tech">
+      <div class="container">
+        <h2 class="mb-4 text-center fw-bold">Technologies & Tools</h2>
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-4 justify-content-center tech-grid">
+          <div class="col text-center"><span class="tech-icon text-primary" title="HTML5"><i class="fab fa-html5"></i><div>HTML5</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-info" title="CSS3"><i class="fab fa-css3-alt"></i><div>CSS3</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-pink" title="SASS"><i class="fab fa-sass"></i><div>SASS</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-primary" title="Bootstrap"><i class="fab fa-bootstrap"></i><div>Bootstrap</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-warning" title="JavaScript"><i class="fab fa-js"></i><div>JavaScript</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-danger" title="AngularJS"><i class="fab fa-angular"></i><div>AngularJS</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-danger" title="Angular"><i class="fab fa-angular"></i><div>Angular</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-success" title="Vue.js"><i class="fab fa-vuejs"></i><div>Vue.js</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-secondary" title="Node.js"><i class="fab fa-node-js"></i><div>Node.js</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-dark" title="JSON"><i class="fas fa-code"></i><div>JSON</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-info" title="REST"><i class="fas fa-plug"></i><div>REST</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-dark" title="Git"><i class="fab fa-git-alt"></i><div>Git</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-dark" title="GitHub"><i class="fab fa-github"></i><div>GitHub</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-primary" title="Bitbucket"><i class="fab fa-bitbucket"></i><div>Bitbucket</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-primary" title="Jira"><i class="fab fa-jira"></i><div>Jira</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-primary" title="Azure DevOps"><i class="fas fa-cloud"></i><div>Azure DevOps</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-info" title="MySQL"><i class="fas fa-database"></i><div>MySQL</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-success" title="MongoDB"><i class="fas fa-leaf"></i><div>MongoDB</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-primary" title="PHP"><i class="fab fa-php"></i><div>PHP</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-secondary" title="Dreamweaver"><i class="fas fa-pencil-ruler"></i><div>Dreamweaver</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-secondary" title="Notepad++"><i class="fas fa-edit"></i><div>Notepad++</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-secondary" title="Web Storm"><i class="fas fa-bolt"></i><div>Web Storm</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-secondary" title="Atom"><i class="fas fa-atom"></i><div>Atom</div></span></div>
+          <div class="col text-center"><span class="tech-icon text-secondary" title="Eclipse"><i class="fas fa-circle-notch"></i><div>Eclipse</div></span></div>
+        </div>
+      </div>
+      <style>
+        .tech-grid .tech-icon {
+          font-size: 2.5rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 0.3rem;
+          transition: transform 0.2s;
+        }
+        .tech-grid .tech-icon:hover {
+          transform: scale(1.18);
+          z-index: 2;
+        }
+        .tech-grid .col div {
+          font-size: 1rem;
+          margin-top: 0.2rem;
+        }
+      </style>
+    </section>
+
+    <!-- Experience Timeline -->
+    <section class="py-5 bg-light" id="experience">
+      <div class="container">
+        <h2 class="mb-4 text-center fw-bold">Professional Experience</h2>
+        <div class="timeline mx-auto" style="max-width: 900px;">
+          <!-- Tectoro Consulting - Cathey Bank -->
+          <div class="timeline-event reveal">
+            <div class="timeline-dot"></div>
+            <h5>Frontend Developer <span class="badge bg-info ms-2">Tectoro Consulting Pvt Ltd</span></h5>
+            <small class="text-muted">Client: Quantifeed | Project: Cathey Bank | Sep 2021 – Feb 2023</small>
+            <div class="fst-italic text-muted mb-2">A digital banking platform for Cathey Bank, developing and maintaining React-based pages and ensuring robust integration and deployment for client requirements.</div>
+            <ul class="mt-2">
+              <li>Developed and maintained various React pages based on client requirements for Cathey Bank.</li>
+              <li>Resolved issues in weblip packages and ensured smooth integration with the banking platform.</li>
+              <li>Verified and tested code in different development environments as per client needs.</li>
+            </ul>
+            <div><strong>Technologies:</strong> React, JavaScript, Weblip, Git, DevOps</div>
+          </div>
+          <!-- Innominds - ExxonMobil -->
+          <div class="timeline-event reveal">
+            <div class="timeline-dot"></div>
+            <h5>UI Developer <span class="badge bg-primary ms-2">Innominds Software Pvt Ltd</span></h5>
+            <small class="text-muted">Client: Deloitte | Project: ExxonMobil (MRMA.xom.cloud.com) | Jan 2022 – Jul 2022</small>
+            <div class="fst-italic text-muted mb-2">A maintenance tool (web & iOS) for instrument technicians and HCP stewards to streamline calibration processes, soon to be enabled for safety-critical devices and IIoT.</div>
+            <ul class="mt-2">
+              <li>Developed powerful Single Page Application and dynamic responsive web application with Angular 9.</li>
+              <li>Extensively used Angular-CLI to generate components, routes, pipes, and unit tests.</li>
+              <li>Worked with NPM commands and used Package.json for managing dependencies and dev-dependencies of Node.js applications.</li>
+              <li>Created Re-usable components, Custom Modules, Custom Directives, Pipes, and Services in Html5, Sass, Bootstrap4, Css3, Json, and Angular 9.</li>
+              <li>Used Azure DevOps for Agile project management and GitHub as a code repository.</li>
+            </ul>
+            <div><strong>Technologies:</strong> Angular 9, HTML5, SASS, Bootstrap4, CSS3, JSON, Node.js, Azure DevOps, GitHub</div>
+          </div>
+          <!-- Innominds - Casey's -->
+          <div class="timeline-event reveal">
+            <div class="timeline-dot"></div>
+            <h5>UI Developer <span class="badge bg-primary ms-2">Innominds Software Pvt Ltd</span></h5>
+            <small class="text-muted">Client: Deloitte | Project: Casey's (caseys.com) | Jun 2021 – Jan 2022</small>
+            <div class="fst-italic text-muted mb-2">Retail chain web platform for Casey's Pizza stores, including new car wash service pages and mobile responsive features for customer convenience.</div>
+            <ul class="mt-2">
+              <li>Created mobile responsive HTML pages with fluid grids and reusable Handlebars JS components.</li>
+              <li>Developed carwash landing and service pages using HTML5, Sass, Bootstrap4, CSS3, JSON, Handlebars JS, and Vue JS.</li>
+              <li>Used Jira for Agile project management and Bitbucket as a code repository.</li>
+            </ul>
+            <div><strong>Technologies:</strong> HTML5, SASS, Bootstrap4, CSS3, JSON, Handlebars JS, Vue.js, Jira, Bitbucket</div>
+          </div>
+          <!-- Innovapath - Talent Screen -->
+          <div class="timeline-event reveal">
+            <div class="timeline-dot"></div>
+            <h5>Frontend Developer <span class="badge bg-success ms-2">Innovapath IT Solutions</span></h5>
+            <small class="text-muted">Project: Talent Screen | Mar 2018 – Sep 2020</small>
+            <div class="fst-italic text-muted mb-2">A platform connecting employers and candidates, offering quizzes, resume editing, and job suggestions to streamline recruitment and preparation.</div>
+            <ul class="mt-2">
+              <li>Developed Talent Screen, a platform connecting employers and candidates with quizzes, resume editor, and job suggestions.</li>
+              <li>Built responsive web applications and implemented quiz programming for candidate screening.</li>
+              <li>Worked on resume and live editor features for candidates.</li>
+            </ul>
+            <div><strong>Technologies:</strong> HTML5, CSS3, Bootstrap, JavaScript, AngularJS, REST, NodeJS, MongoDB, Git, GitHub</div>
+          </div>
+          <!-- Innovapath - TalentScreen (MEAN stack) -->
+          <div class="timeline-event reveal">
+            <div class="timeline-dot"></div>
+            <h5>Frontend Developer <span class="badge bg-success ms-2">Innovapath IT Solutions</span></h5>
+            <small class="text-muted">Project: TalentScreen (https://talentscreen.io) | Mar 2016 – Mar 2018</small>
+            <div class="fst-italic text-muted mb-2">A screening application for candidates and employers, built on the MEAN stack, with real-time features and social login integration.</div>
+            <ul class="mt-2">
+              <li>Built SPA using MEAN stack, Auth signup/login, and integrated Google, Facebook, LinkedIn, GitHub.</li>
+              <li>Developed backend services in Node.js, used MongoDB/MySQL, Redis for caching, and implemented RESTful APIs.</li>
+              <li>Created AngularJS services, directives, and implemented routing, CRUD, and caching.</li>
+            </ul>
+            <div><strong>Technologies:</strong> HTML5, CSS3, Bootstrap, JavaScript, AngularJS, NodeJS, MongoDB, MySQL, Redis, Git, GitHub</div>
+          </div>
+          <!-- Whiteboxqa -->
+          <div class="timeline-event reveal">
+            <div class="timeline-dot"></div>
+            <h5>Web Developer <span class="badge bg-warning text-dark ms-2">Whiteboxqa</span></h5>
+            <small class="text-muted">Project: Whiteboxqa.com | Apr 2014 – Mar 2016</small>
+            <div class="fst-italic text-muted mb-2">An online training portal for software technologies, offering class schedules, training videos, and student skill improvement through quizzes.</div>
+            <ul class="mt-2">
+              <li>Developed internal and external validation code using JavaScript and built user interactive websites with HTML, CSS.</li>
+              <li>Implemented quiz programming, responsive web design, and dynamic page loading with AJAX.</li>
+              <li>Worked closely with product owners, followed agile methodology, and ensured cross-browser compatibility.</li>
+            </ul>
+            <div><strong>Technologies:</strong> HTML, CSS, JavaScript, Bootstrap3, PHP, Git</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="py-5" id="projects">
+      <div class="container">
+        <h2 class="mb-4 text-center fw-bold">Projects</h2>
+        <div class="row g-4 justify-content-center">
+          <div class="col-md-4">
+            <div class="project-card">
+              <div class="project-inner">
+                <div class="project-front d-flex flex-column justify-content-center align-items-center">
+                  <h5>Smart Inventory Manager</h5>
+                  <p class="text-muted">Retail Analytics</p>
+                  <i class="fas fa-boxes fa-3x mb-2 text-primary"></i>
+                </div>
+                <div class="project-back d-flex flex-column justify-content-center align-items-center">
+                  <p>A web app for real-time inventory tracking and analytics for retail businesses. Built with React, Node.js, and MongoDB.</p>
+                  <div>
+                    <span class="badge bg-primary">React</span>
+                    <span class="badge bg-secondary">Node.js</span>
+                    <span class="badge bg-success">MongoDB</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="project-card">
+              <div class="project-inner">
+                <div class="project-front d-flex flex-column justify-content-center align-items-center">
+                  <h5>Employee Portal</h5>
+                  <p class="text-muted">HR Management</p>
+                  <i class="fas fa-users fa-3x mb-2 text-success"></i>
+                </div>
+                <div class="project-back d-flex flex-column justify-content-center align-items-center">
+                  <p>An internal portal for HR and employees to manage leaves, payroll, and performance. Developed using Angular and REST APIs.</p>
+                  <div>
+                    <span class="badge bg-danger">Angular</span>
+                    <span class="badge bg-info text-dark">REST API</span>
+                    <span class="badge bg-primary">Bootstrap</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="project-card">
+              <div class="project-inner">
+                <div class="project-front d-flex flex-column justify-content-center align-items-center">
+                  <h5>E-Commerce Platform</h5>
+                  <p class="text-muted">Online Shopping</p>
+                  <i class="fas fa-shopping-cart fa-3x mb-2 text-warning"></i>
+                </div>
+                <div class="project-back d-flex flex-column justify-content-center align-items-center">
+                  <p>A scalable e-commerce platform with secure payment integration and user-friendly UI. Technologies: HTML, CSS, JS, GitHub.</p>
+                  <div>
+                    <span class="badge bg-warning text-dark">HTML</span>
+                    <span class="badge bg-info text-dark">CSS</span>
+                    <span class="badge bg-warning">JavaScript</span>
+                    <span class="badge bg-dark">GitHub</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="py-5 bg-light" id="education">
+      <div class="container">
+        <h2 class="mb-4 text-center fw-bold">Education</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="edu-card">
+              <i class="fas fa-graduation-cap fa-2x mb-3"></i>
+              <h5>Bachelor of Technology</h5>
+              <h6 class="mb-2">Raja Mahendra College of Engineering (JNTUH)</h6>
+              <p>Aggregate: 68.5%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Personal Information Section -->
+    <section class="py-5" id="personal-info">
+      <div class="container">
+        <h2 class="mb-4 text-center fw-bold">Personal Information</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-7">
+            <div class="card shadow-sm p-4">
+              <ul class="list-unstyled mb-0">
+                <li><strong>Name:</strong> Swetha Gurram</li>
+                <li><strong>Date of Birth:</strong> 29-03-1992</li>
+                <li><strong>Address:</strong> 1-9-202/e/1, Ramnagar, Hyderabad, 500020, INDIA</li>
+                <li><strong>Languages Known:</strong> English, Hindi, Telugu</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-5" id="contact">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-7 col-lg-6">
+            <div class="contact-card">
+              <h2 class="mb-4 text-center fw-bold">Contact Me</h2>
+              <div class="contact-methods">
+                <a href="tel:+916304759180" class="contact-method"><i class="fas fa-phone-alt"></i>+91-6304759180</a>
+                <a href="https://linkedin.com/in/swetha-profile" target="_blank" class="contact-method"><i class="fab fa-linkedin"></i>LinkedIn</a>
+                <a href="mailto:Gswetha.ip@gmail.com" class="contact-method"><i class="fas fa-envelope"></i>Gswetha.ip@gmail.com</a>
+                <a href="https://www.naukri.com/swetha-profile" target="_blank" class="contact-method"><i class="fas fa-briefcase"></i>Naukri Profile</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Declaration Section -->
+    <section class="py-5 bg-white" id="declaration">
+      <div class="container">
+        <div class="declaration-quote reveal">
+          I hereby declare that the information provided above is true to the best of my knowledge. My passion for technology, strong problem-solving skills, and dedication to continuous learning make me a valuable asset to any organization. I am committed to delivering high-quality solutions and contributing positively to my team and company.
+          <div class="signature">- Swetha</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Contact Modal -->
+  <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contactModalLabel">Let's Connect!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <p>Thank you for your interest! Please use the contact options below to reach out to me.</p>
+          <a href="tel:+916304759180" class="btn btn-outline-primary m-2"><i class="fas fa-phone-alt me-2"></i>Call</a>
+          <a href="mailto:Gswetha.ip@gmail.com" class="btn btn-outline-danger m-2"><i class="fas fa-envelope me-2"></i>Email</a>
+          <a href="https://linkedin.com/in/swetha-profile" target="_blank" class="btn btn-outline-info m-2"><i class="fab fa-linkedin me-2"></i>LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Image upload preview
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function(){
+        document.getElementById('profilePic').src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    // Scroll reveal animation
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      for (let i = 0; i < reveals.length; i++) {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveals[i].getBoundingClientRect().top;
+        const elementVisible = 80;
+        if (elementTop < windowHeight - elementVisible) {
+          reveals[i].classList.add('active');
+        } else {
+          reveals[i].classList.remove('active');
+        }
+      }
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('DOMContentLoaded', revealOnScroll);
+    // Theme toggle logic
+    const themeSwitch = document.getElementById('themeSwitch');
+    const themeLabel = document.getElementById('themeLabel');
+    const navbar = document.getElementById('mainNavbar');
+    themeSwitch.addEventListener('change', function() {
+      document.body.classList.toggle('dark-theme');
+      document.querySelector('.hero-bg').classList.toggle('dark-theme');
+      navbar.classList.toggle('dark-theme');
+      if (themeSwitch.checked) {
+        themeLabel.textContent = 'Light';
+      } else {
+        themeLabel.textContent = 'Dark';
+      }
+    });
+  </script>
+</body>
+</html>
